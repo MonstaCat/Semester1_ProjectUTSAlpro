@@ -1,15 +1,26 @@
 package uts_andikarizkipradana;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import javax.swing.JOptionPane;
 
 public class UTS_AndikaRizkiPradana_KodeB {
     public static void main(String[] args) {
         
         int jmlBuku, konfirKeranjang, konfirPembelian, konfirMember;
-        float harga = 0, totalHarga = 0, estimasiDiskon, totalBelanjaMember;
+        double harga = 0, totalHarga = 0, estimasiDiskon, totalBelanjaMember;
         String kodeBuku, inforBuku, checkout = "";
         
         jmlBuku = Integer.parseInt(JOptionPane.showInputDialog("Berapa jumlah buku yang ingin anda cari infonya?"));
+        
+        DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
         
         for (int i = 1; i <= jmlBuku; i++) {
             kodeBuku = JOptionPane.showInputDialog("Masukkan kode buku ke-" +i);
@@ -55,7 +66,7 @@ public class UTS_AndikaRizkiPradana_KodeB {
                     break;
             }
             
-            konfirKeranjang = Integer.parseInt(JOptionPane.showInputDialog("Informasi Buku, \n\n" +inforBuku+ "\nHarga: " +harga+ "\n\nApakah ingin menambahkan buku ke keranjang belanja? (1.Ya / 2.Tidak)"));
+            konfirKeranjang = Integer.parseInt(JOptionPane.showInputDialog("Informasi Buku, \n\n" +inforBuku+ "\nHarga: " +kursIndonesia.format(harga)+ "\n\nApakah ingin menambahkan buku ke keranjang belanja? (1.Ya / 2.Tidak)"));
            
             if(konfirKeranjang == 1){
                 totalHarga += harga;
@@ -67,25 +78,24 @@ public class UTS_AndikaRizkiPradana_KodeB {
         } //End for
         
         //Informasi Keranjang
-        konfirPembelian = Integer.parseInt(JOptionPane.showInputDialog(null, "Informasi Keranjang, \n\n\n" +checkout+ "\nTotal Harga: " +totalHarga+ "\n\nApakah anda ingin membeli? (1.Ya / 2.Tidak)"));
+        konfirPembelian = Integer.parseInt(JOptionPane.showInputDialog(null, "Informasi Keranjang, \n\n\n" +checkout+ "\nTotal Harga: " +kursIndonesia.format(totalHarga)+ "\n\nApakah anda ingin membeli? (1.Ya / 2.Tidak)"));
         if (konfirPembelian == 1) {
             
             konfirMember = Integer.parseInt(JOptionPane.showInputDialog(null, "Apakah anda mempunyai kartu member? (1.Ya / 2.Tidak)"));
             if(konfirMember == 1){
                 estimasiDiskon = (float) (totalHarga * 0.15);
                 totalBelanjaMember = totalHarga - estimasiDiskon;
-                JOptionPane.showMessageDialog(null, "Informasi Pembelian, \n\n\n" +checkout+ "\nTotal Harga: " +totalHarga+ "\n\nDiskon Member: 15%\nDiskon Toko: " +estimasiDiskon+ "\n\nTotal Belanja: " +totalBelanjaMember);
+                JOptionPane.showMessageDialog(null, "Informasi Pembelian, \n\n\n" +checkout+ "\nTotal Harga: " +kursIndonesia.format(totalHarga)+ "\n\nDiskon Member: 15%\nDiskon Toko: " +kursIndonesia.format(estimasiDiskon)+ "\n\nTotal Belanja: " +kursIndonesia.format(totalBelanjaMember));
                 JOptionPane.showMessageDialog(null, "Terima Kasih Telah Mengunjungi Toko Kami");
                 
-            } else {
-                JOptionPane.showMessageDialog(null, "Informasi Pembelian, \n\n\n" +checkout+ "Total Belanja: " +totalHarga);
+            } else {    
+                JOptionPane.showMessageDialog(null, "Informasi Pembelian, \n\n\n" +checkout+ "Total Belanja: " +kursIndonesia.format(totalHarga));
                 JOptionPane.showMessageDialog(null, "Terima Kasih Telah Mengunjungi Toko Kami");
             }
             
         } else {
             JOptionPane.showMessageDialog(null, "Terima Kasih Telah Mengunjungi Toko Kami");
-        }
-        
+        } 
         
     }
 }
