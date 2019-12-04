@@ -1,12 +1,14 @@
 package uts_andikarizkipradana;
 
 import javax.swing.JOptionPane;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 public class UTS_AndikaRizkiPradana_KodeA {
     public static void main(String[] args) {
         
         int jenisPaket, jmlPaket, hargaPaket = 0, hargaPaketAnak = 0, hargaPaketDewasa = 0, totalHargaAnak = 0, statusAnak, jmlAnak = 0, usiaAnak;
-        float totalHarga = 0;
+        double totalHarga = 0;
         String namaPaket = "", fasilitasPaket = "";
         
         jenisPaket = Integer.parseInt(JOptionPane.showInputDialog("Masukkan Pilihan Paket Tour: \n"
@@ -97,6 +99,15 @@ public class UTS_AndikaRizkiPradana_KodeA {
                     break;        
         }
         
+        DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        
         jmlPaket = Integer.parseInt(JOptionPane.showInputDialog("Berapa paket yang akan dibeli?"));
         statusAnak = Integer.parseInt(JOptionPane.showInputDialog("Apakah anda membawa anak? (1.Ya/2.Tidak)"));
         
@@ -122,10 +133,10 @@ public class UTS_AndikaRizkiPradana_KodeA {
             
             JOptionPane.showMessageDialog(null, "Terima Kasih telah memesan. Informasi Pesanan anda adalah sbb"
                     + "\nNama Paket : " + namaPaket + fasilitasPaket
-                    + "\nHarga per pax : " + "Rp." + hargaPaket
+                    + "\nHarga per pax : " + kursIndonesia.format(hargaPaket)
                     + "\nJumlah Peserta : " + jmlPaket + " orang"
                     + "\nAnak-anak : " + jmlAnak + " Orang"
-                    + "\nTotal Harga : " + "Rp." + totalHarga);
+                    + "\nTotal Harga : " + kursIndonesia.format(totalHarga));
             
         } else {
             if (jmlPaket > 4) {
@@ -137,10 +148,10 @@ public class UTS_AndikaRizkiPradana_KodeA {
         
             JOptionPane.showMessageDialog(null, "Terima Kasih telah memesan. Informasi Pesanan anda adalah sbb"
                     + "\nNama Paket : " + namaPaket + fasilitasPaket
-                    + "\nHarga per pax : " + "Rp." + hargaPaket
+                    + "\nHarga per pax : " + kursIndonesia.format(hargaPaket)
                     + "\nJumlah Peserta : " + jmlPaket + " orang"
                     + "\nAnak-anak : " + jmlAnak + " Orang"
-                    + "\nTotal Harga : " + "Rp." + totalHarga);
+                    + "\nTotal Harga : " + kursIndonesia.format(totalHarga));
         }
         
     }
