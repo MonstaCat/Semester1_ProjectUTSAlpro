@@ -5,8 +5,9 @@ import javax.swing.JOptionPane;
 public class UTS_AndikaRizkiPradana_KodeA {
     public static void main(String[] args) {
         
-        int jenisPaket, jmlPaket, hargaPaket = 0, hargaPaketAnak = 0, hargaPaketDewasa = 0, totalHarga = 0, totalHargaAnak = 0, statusAnak, jmlAnak, usiaAnak;
-        String namaPaket, fasilitasPaket = "";
+        int jenisPaket, jmlPaket, hargaPaket = 0, hargaPaketAnak = 0, hargaPaketDewasa = 0, totalHargaAnak = 0, statusAnak, jmlAnak = 0, usiaAnak;
+        float totalHarga = 0;
+        String namaPaket = "", fasilitasPaket = "";
         
         jenisPaket = Integer.parseInt(JOptionPane.showInputDialog("Masukkan Pilihan Paket Tour: \n"
                                                                 + "1. Amazing Turki Tour \n"
@@ -97,13 +98,6 @@ public class UTS_AndikaRizkiPradana_KodeA {
         }
         
         jmlPaket = Integer.parseInt(JOptionPane.showInputDialog("Berapa paket yang akan dibeli?"));
-        
-        if (jmlPaket > 4) {
-            hargaPaketDewasa = (int) (hargaPaket - (hargaPaket * 0.15));
-        }
-        
-        totalHarga = hargaPaket * jmlPaket;
-        
         statusAnak = Integer.parseInt(JOptionPane.showInputDialog("Apakah anda membawa anak? (1.Ya/2.Tidak)"));
         
         if (statusAnak == 1) {
@@ -113,16 +107,41 @@ public class UTS_AndikaRizkiPradana_KodeA {
                 usiaAnak = Integer.parseInt(JOptionPane.showInputDialog("Masukkan usia anak ke-" +i));
 
                 if (usiaAnak < 5) {
-                    hargaPaketAnak = (int) (hargaPaket - (hargaPaket * 0.50));
+                    hargaPaketAnak += hargaPaket * 0.5;
                 } else if (usiaAnak >= 5 && usiaAnak <= 10) {
-                    hargaPaketAnak = (int) (hargaPaket - (hargaPaket * 0.35));
+                    hargaPaketAnak += hargaPaket * 0.35;
                 }
-
-                totalHargaAnak += hargaPaketAnak;
-                } //End For
-        }
+            } //End For
+            
+            if (jmlPaket > 4) {
+                hargaPaketDewasa = (int) (((hargaPaket * jmlPaket) - (hargaPaketAnak)) * 0.15);
+                totalHarga = ((hargaPaket * jmlPaket) - (hargaPaketAnak)) - hargaPaketDewasa;
+            } else {
+                totalHarga =  (int) ((hargaPaket * jmlPaket) - (hargaPaketAnak));
+            }
+            
+            JOptionPane.showMessageDialog(null, "Terima Kasih telah memesan. Informasi Pesanan anda adalah sbb"
+                    + "\nNama Paket : " + namaPaket + fasilitasPaket
+                    + "\nHarga per pax : " + "Rp." + hargaPaket
+                    + "\nJumlah Peserta : " + jmlPaket + " orang"
+                    + "\nAnak-anak : " + jmlAnak + " Orang"
+                    + "\nTotal Harga : " + "Rp." + totalHarga);
+            
+        } else {
+            if (jmlPaket > 4) {
+                hargaPaketDewasa = (int) (((hargaPaket * jmlPaket) - (hargaPaketAnak)) * 0.15);
+                totalHarga = ((hargaPaket * jmlPaket) - (hargaPaketAnak)) - hargaPaketDewasa;
+            } else {
+                totalHarga =  (int) ((hargaPaket * jmlPaket) - (hargaPaketAnak));
+            }
         
-        JOptionPane.showMessageDialog(null, totalHarga + totalHargaAnak);
+            JOptionPane.showMessageDialog(null, "Terima Kasih telah memesan. Informasi Pesanan anda adalah sbb"
+                    + "\nNama Paket : " + namaPaket + fasilitasPaket
+                    + "\nHarga per pax : " + "Rp." + hargaPaket
+                    + "\nJumlah Peserta : " + jmlPaket + " orang"
+                    + "\nAnak-anak : " + jmlAnak + " Orang"
+                    + "\nTotal Harga : " + "Rp." + totalHarga);
+        }
         
     }
 }
